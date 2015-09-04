@@ -3,5 +3,5 @@ project(spell_number)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
-set(SOURCE_FILES main.cpp)
+set(SOURCE_FILES main.cpp spelling.cpp spelling.h)
 add_executable(spell_number ${SOURCE_FILES})
