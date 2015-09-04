@@ -4,9 +4,6 @@
 #include <iostream>
 
 std::string spell_ones(int number) {
-    if (0 >= number || number >= 10) {
-        exit(1);
-    }
     std::map<int, std::string> Spelling;
     Spelling[1] = "один";
     Spelling[2] = "два";
@@ -17,13 +14,15 @@ std::string spell_ones(int number) {
     Spelling[7] = "семь";
     Spelling[8] = "восемь";
     Spelling[9] = "девять";
+
+    if (Spelling.count(number) == 0) {
+        exit(1);
+    }
+
     return Spelling[number];
 }
 
 std::string spell_dozens(int number) {
-    if (1 >= number || number >= 10) {
-        exit(1);
-    }
     std::map<int, std::string> Spelling = {
             {2, "двадцать"},
             {3, "тридцать"},
@@ -34,13 +33,13 @@ std::string spell_dozens(int number) {
             {8, "восемьдесят"},
             {9, "девяносто"}
     };
+    if (Spelling.count(number) == 0) {
+        exit(1);
+    }
     return Spelling[number];
 }
 
 std::string spell_tenths(int number) {
-    if (9 <= number || number >= 20) {
-        exit(1);
-    }
     std::map<int, std::string> Spelling = {
             {10, "десять"},
             {11, "одиннадцать"},
@@ -53,6 +52,9 @@ std::string spell_tenths(int number) {
             {18, "восемнадцать"},
             {19, "девятнадцать"}
     };
+    if (Spelling.count(number) == 0) {
+        exit(1);
+    }
     return Spelling[number];
 }
 
@@ -75,41 +77,21 @@ std::string spell_hundreds(int number) {
 }
 
 std::string spell(int number) {
-    if (1 < number || number > 999) {
+    if (1 > number || number > 999) {
         exit(1);
     }
+
+    int hundreds = (number / 100) % 100;
+    int dozens = (number / 10) % 10;
+    int units = number % 10;
+
     std::string result;
-    std::string str_number = std::to_string(number);
-    unsigned long size = str_number.size();
+    std::string space = " ";
+    std::string nothing = "";
 
-    bool teens = size >= 2 && str_number[size - 2] == '1';
-    std::cout << "Teens: " << teens;
-
-    int iteration_shift;
-
-    if (teens && size == 2) {
-        return spell_tenths(number);
-    } else if (teens) {
-        iteration_shift = 3;
-    } else {
-        iteration_shift = 0;
-    }
-
-    for (std::string::size_type i = size - iteration_shift; i >= 0; --i) {
-        switch(i) {
-            case 2:
-                result.insert(0, spell_ones(std::stoi(str_number[i])));
-                break;
-            case 1:
-                result.insert(0, spell_dozens(std::stoi(str_number[i])));
-                result.insert(0, " ");
-                break;
-            case 0:
-                result.insert(0, spell_hundreds(std::stoi(str_number[i])));
-                break;
-            default:
-                break;
-        }
-    }
+    result += hundreds > 0 ? spell_hundreds(hundreds) + space : nothing;
+    result += dozens > 1 ? spell_dozens(dozens) + space : nothing;
+    result += dozens == 1 ? spell_tenths(10 + units) + space : nothing;
+    result += units > 0 && dozens != 1 ? spell_ones(units) : nothing;
     return result;
 }
