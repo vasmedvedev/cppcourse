@@ -1,8 +1,16 @@
 #include "array.h"
-#include "math.h"
+#include <cmath>
+#include <exception>
 
 Array::Array(int size): size_(size) {
     array_ = new double[size];
+}
+
+Array::Array(const Array& array): size_(array.size_) {
+    array_ = new double[size_];
+    for(int i = 0; i < size_; i++) {
+        array_[i] = array.array_[i];
+    }
 }
 
 void Array::nullify() {
@@ -15,17 +23,21 @@ void Array::fill_with(double value) {
     }
 }
 
-double Array::get_by_index(int index) {
+double Array::get(int index) {
     if(index < 0 || index >= size_) {
-        return NAN;
+        throw std::exception();
     }
     return array_[index];
 }
 
-bool Array::set_by_index(int index, double value) {
+bool Array::set(int index, double value) {
     if(index < 0 || index >= size_) {
         return false;
     }
     array_[index] = value;
     return true;
+}
+
+Array::~Array() {
+    delete[] array_;
 }

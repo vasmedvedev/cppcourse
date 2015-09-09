@@ -4,10 +4,13 @@
 class Array {
 public:
     Array(int size = 10);
+    Array(const Array& array);
+    ~Array();
+
     void nullify();
     void fill_with(double value);
-    double get_by_index(int index);
-    bool set_by_index(int index, double value);
+    double get(int index);
+    bool set(int index, double value);
 
 private:
     int size_;
