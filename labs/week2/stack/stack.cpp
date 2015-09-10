@@ -1,5 +1,4 @@
 #include "stack.h"
-#include "math.h"
 
 int Stack::capacity() {
     return capacity_;
@@ -13,8 +12,7 @@ bool Stack::push(int value) {
     if (full()) {
         return false;
     }
-    *push_ptr_ = value;
-    ++push_ptr_;
+    stack_[pos_++] = value;
     --capacity_;
     return true;
 }
@@ -23,16 +21,16 @@ bool Stack::pop() {
     if (empty()) {
         return false;
     }
-    --push_ptr_;
+    --pos_;
     ++capacity_;
     return true;
 }
 
-int Stack::top() {
+double Stack::top() {
     if(empty()) {
-        return NAN;
+        throw "Stack is empty";
     }
-    return *push_ptr_;
+    return stack_[pos_ - 1];
 }
 
 bool Stack::full() {
@@ -43,6 +41,10 @@ bool Stack::empty() {
     return capacity_ == stack_size_;
 }
 
-Stack::Stack() {
-    capacity_ = stack_size_;
-};
+Stack::Stack(int size): stack_size_(size), capacity_(size) {
+    stack_ = new double[stack_size_];
+}
+
+Stack::~Stack() {
+    delete[] stack_;
+}

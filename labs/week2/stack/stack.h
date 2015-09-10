@@ -3,11 +3,12 @@
 
 class Stack {
 public:
-    Stack();
+    Stack(int size);
+    ~Stack();
 
     int capacity();
     int size() const;
-    int top();
+    double top();
 
     bool pop();
     bool push(int value);
@@ -15,11 +16,9 @@ public:
     bool full();
 
 private:
-    const int stack_size_ = 10;
-
+    int stack_size_;
     int capacity_;
-    int stack_[10];
-    int* push_ptr_ = stack_;
-    int* pop_ptr_ = stack_;
+    int pos_ = 0;
+    double* stack_;
 };
 #endif //STACK_STACK_H
