@@ -3,13 +3,17 @@
 
 class Array {
 public:
-    Array(int size = 10);
+    Array(int size);
     Array(const Array& array);
     ~Array();
 
     void nullify();
     void fill_with(double value);
-    double get(int index);
+
+    const double get(int index);
+
+    int size() const;
+
     bool set(int index, double value);
 
 private:

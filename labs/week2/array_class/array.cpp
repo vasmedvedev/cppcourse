@@ -23,7 +23,7 @@ void Array::fill_with(double value) {
     }
 }
 
-double Array::get(int index) {
+const double Array::get(int index) {
     if(index < 0 || index >= size_) {
         throw std::exception();
     }
@@ -40,4 +40,8 @@ bool Array::set(int index, double value) {
 
 Array::~Array() {
     delete[] array_;
+}
+
+int Array::size() const {
+    return size_;
 }
