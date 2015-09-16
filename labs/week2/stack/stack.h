@@ -3,21 +3,21 @@
 
 class Stack {
 public:
-    Stack(int size);
+    Stack(int capacity);
     ~Stack();
 
-    int capacity();
     int size() const;
-    double top();
+    int capacity() const;
+    double top() const;
 
     bool pop();
     bool push(int value);
-    bool empty();
-    bool full();
+    bool full() const;
+    bool empty() const;
 
 private:
-    int stack_size_;
     int capacity_;
+    int stack_size_ = 0;
     int pos_ = 0;
     double* stack_;
 };
