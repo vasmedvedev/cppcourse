@@ -80,8 +80,8 @@ std::string Calculator::clean_expression(std::string s) {
     const std::string::iterator begin = s.begin();
     const std::string::iterator end = s.end();
 
-    long opened = std::count(begin, end, '(');
-    long closed = std::count(begin, end, ')');
+    long opened = std::count(begin, end, OPEN_BRACKET);
+    long closed = std::count(begin, end, CLOSE_BRACKET);
 
     if (opened != closed) {
         throw InvalidExpressionException();
