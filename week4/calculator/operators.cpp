@@ -13,14 +13,27 @@ int Operator::get_priority() const {
 /* ------------- */
 
 Add::Add(): Operator('+', 0) {}
+
 double Add::calculate(double a, double b) const {
     return a + b;
 }
 
 
-/* ------------- */
-
 Subtract::Subtract(): Operator('-', 0) {}
+
 double Subtract::calculate(double a, double b) const {
     return a - b;
+}
+
+
+Multiply::Multiply(): Operator('*', 1) {}
+
+double Multiply::calculate(double a, double b) const {
+    return a * b;
+}
+
+Divide::Divide(): Operator('/', 1) {}
+
+double Divide::calculate(double a, double b) const {
+    return a / b;
 }

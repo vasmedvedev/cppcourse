@@ -1,6 +1,7 @@
 #ifndef CALCULATOR_OPERATORS_H
 #define CALCULATOR_OPERATORS_H
 #include <unordered_map>
+#include <string>
 
 class Operator {
 public:
@@ -24,6 +25,18 @@ public:
 class Subtract: public Operator {
 public:
     Subtract();
+    double calculate(double, double) const;
+};
+
+class Multiply: public Operator {
+public:
+    Multiply();
+    double calculate(double, double) const;
+};
+
+class Divide: public Operator {
+public:
+    Divide();
     double calculate(double, double) const;
 };
 

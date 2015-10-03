@@ -2,20 +2,21 @@
 #define CALCULATOR_CALC_H
 
 #include <stack>
-#include <string>
 #include <unordered_map>
+#include <unordered_set>
 #include "operators.h"
 
 class Calculator {
 public:
     Calculator(std::string);
-    double calculate() const;
+    double calculate();
     void register_operator(const Operator* op);
-    void process_char(char);
+    void process_brackets();
+    void reduce();
 
 private:
-    static const char OPEN_BRACKET = '(';
-    static const char CLOSE_BRACKET = ')';
+    static const char OPEN_BRACKET;
+    static const char CLOSE_BRACKET;
 
     std::stack<char> operator_stack_;
     std::stack<double> operand_stack_;
