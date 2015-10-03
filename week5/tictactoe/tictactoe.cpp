@@ -80,7 +80,7 @@ void TicTacToe::start() {
     draw_board();
     pair<int, int> Players(X, O);
     pair<int, int> Swapped(O, X);
-    int row, column;
+    short unsigned int row, column;
     while(!game_over()) {
         cout << "Player " << char_map[Players.first] << ", make your move, row and column on separate lines" << endl;
         cin >> row >> column;
