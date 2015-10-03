@@ -1,11 +1,10 @@
 #include <iostream>
 #include "operators.h"
 #include "calc.h"
-
 using namespace std;
 
 int main() {
-    Calculator calc("(2+3)*5+7*(9+8)");
+    Calculator calc("(257+39)*58+5");
 
     Add add;
     Subtract subtract;

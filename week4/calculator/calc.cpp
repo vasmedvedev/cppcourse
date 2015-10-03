@@ -1,11 +1,14 @@
 #include "calc.h"
 #include <cstdlib>
 #include <iostream>
+#include <algorithm>
 
-Calculator::Calculator(std::string string): expression_(string) {}
+Calculator::Calculator(std::string string): expression_(clean_expression(string)) {}
 
 const char Calculator::OPEN_BRACKET = '(';
 const char Calculator::CLOSE_BRACKET = ')';
+const std::regex Calculator::DIGITS_RE("\\d+");
+const std::regex Calculator::EXPRESSION_RE("^[\\d\\(\\)\\+\\*\\/\\-]*$");
 
 void Calculator::register_operator(const Operator* op) {
     if(op_mapping_.count(op->get_operator()) > 0) {
@@ -15,10 +18,14 @@ void Calculator::register_operator(const Operator* op) {
 }
 
 double Calculator::calculate() {
-    for(int i = 0; i < expression_.length(); i++) {
+    std::smatch match;
+    for(size_t i = 0; i < expression_.length(); i++) {
         char c = expression_[i];
         if(isdigit(c)) {
-            operand_stack_.push(std::strtod(&c, NULL)); // There is probably a better way...
+            std::regex_search(expression_.substr(i, expression_.length() - i), match, DIGITS_RE);
+            const char* digits_ptr = match.str().c_str();
+            operand_stack_.push(std::strtod(digits_ptr, nullptr)); // There is probably a better way...
+            i += match.length() - 1;
             continue;
         } else {
            if(c == OPEN_BRACKET) {
@@ -65,4 +72,27 @@ void Calculator::process_brackets() {
         reduce();
     }
     operator_stack_.pop();
+}
+
+std::string Calculator::clean_expression(std::string s) {
+    /* Attempt to clean data before processing */
+
+    const std::string::iterator begin = s.begin();
+    const std::string::iterator end = s.end();
+
+    long opened = std::count(begin, end, '(');
+    long closed = std::count(begin, end, ')');
+
+    if (opened != closed) {
+        throw InvalidExpressionException();
+    }
+
+    std::remove(begin, end, ' ');
+
+    std::smatch m;
+    std::regex_search(s, m, EXPRESSION_RE);
+    if (!m.size()) {
+        throw InvalidExpressionException();
+    }
+    return s;
 }
