@@ -89,11 +89,9 @@ void TicTacToe::start() {
             cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
         if(player_move(row, column, Players.first)) {
-            draw_board();
             swap(Players, Swapped);
-        } else {
-            draw_board();
         }
+        draw_board();
     }
     draw_board();
     cout << "Game Over" << endl;
