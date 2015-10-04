@@ -13,7 +13,7 @@ public:
     void register_operator(const Operator* op);
     void process_brackets();
     void reduce();
-    std::string clean_expression(std::string s);
+    std::string clean_expression(std::string s) const;
 
 private:
     static const char OPEN_BRACKET;

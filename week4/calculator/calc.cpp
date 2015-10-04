@@ -74,7 +74,7 @@ void Calculator::process_brackets() {
     operator_stack_.pop();
 }
 
-std::string Calculator::clean_expression(std::string s) {
+std::string Calculator::clean_expression(std::string s) const {
     /* Attempt to clean data before processing */
 
     const std::string::iterator begin = s.begin();
